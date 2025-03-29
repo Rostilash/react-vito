@@ -20,7 +20,7 @@ export default function App() {
         </section>
         <section>
           <h3> Що ми бачимо в нашому проекті </h3>
-          <Button> Підхід</Button>
+          <Button> Підхід </Button>
           <Button> Концепція </Button>
         </section>
       </main>
