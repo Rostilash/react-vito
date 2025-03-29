@@ -11,13 +11,6 @@ export default function App() {
     setContentType(type);
   }
 
-  let tabContent = 0;
-  if (contentType) {
-    tabContent = <p>{differences[contentType]}</p>;
-  } else {
-    tabContent = <p>Натисни на кнопку</p>;
-  }
-
   return (
     <div>
       <Header />
@@ -35,16 +28,20 @@ export default function App() {
         </section>
         <section>
           <h3> Що ми бачимо в нашому проекті </h3>
-          <Button onClick={() => handleClick("way")}> Підхід </Button>
-          <Button onClick={() => handleClick("easy")}> Додаток </Button>
-          <Button onClick={() => handleClick("program")}> Концепція </Button>
+          <Button isActive={contentType === "way"} onClick={() => handleClick("way")}>
+            Підхід
+          </Button>
+          <Button isActive={contentType === "easy"} onClick={() => handleClick("easy")}>
+            Додаток
+          </Button>
+          <Button isActive={contentType === "program"} onClick={() => handleClick("program")}>
+            Концепція
+          </Button>
 
-          {/* {contentType ? <p>{differences[contentType]}</p> : <p>Натисни на кнопку</p>} */}
+          {contentType ? <p>{differences[contentType]}</p> : <p>Натисни на кнопку</p>}
 
           {/* {!contentType && <p>Натисни на кнопку</p>}
           {contentType && <p>{differences[contentType]}</p>} */}
-
-          {tabContent}
         </section>
       </main>
     </div>
