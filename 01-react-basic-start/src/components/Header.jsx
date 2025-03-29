@@ -1,4 +1,4 @@
-import logo from "/logo-name.svg";
+// import logo from "/logo-name.svg";
 import { useState } from "react";
 
 export default function Header() {
@@ -10,8 +10,8 @@ export default function Header() {
 
   return (
     <header>
-      <img src={logo} alt={name}></img>
-      {/* <h3> Rostik Dev</h3> */}
+      {/* <img src={logo} alt={name}></img> */}
+      <h3> Rostik Dev</h3>
       <span>Time now: {now.toLocaleTimeString()}</span>
     </header>
   );
