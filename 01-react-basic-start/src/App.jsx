@@ -3,14 +3,20 @@ import TeachingSection from "./components/TeachingSection.jsx";
 import TeachingSectionTwo from "./components/TeachingSectionTwo.jsx";
 import IntroSection from "./components/IntroSection.jsx";
 import TabsSection from "./components/TabsSection.jsx";
+import EffectSection from "./components/EffectSection.jsx";
 import FeedbackSection from "./components/FeedbackSection.jsx";
 import { useState } from "react";
 
 export default function App() {
-  const [tab, setTab] = useState("feedback");
+  const [visible, setVisible] = useState(true);
+  const [tab, setTab] = useState("effect");
+
+  setTimeout(() => {
+    setVisible(false);
+  }, 3000);
   return (
     <>
-      <Header />
+      {visible && <Header />}
       <main>
         <IntroSection />
         <TabsSection active={tab} onChange={(current) => setTab(current)} />
@@ -22,6 +28,8 @@ export default function App() {
           </>
         )}
         {tab === "feedback" && <FeedbackSection />}
+
+        {tab === "effect" && <EffectSection />}
       </main>
     </>
   );

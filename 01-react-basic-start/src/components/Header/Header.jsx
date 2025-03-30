@@ -1,5 +1,5 @@
 // import logo from "/logo-name.svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 // import "./Header.css";
 
@@ -16,14 +16,16 @@ const HeadContainer = styled.header`
 export default function Header() {
   const [now, setNow] = useState(new Date());
 
-  setInterval(() => {
-    setNow(new Date());
-  }, 1000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setNow(new Date());
+    }, 1000);
+  }, []);
 
   return (
     <HeadContainer>
       {/* <img src={logo} alt={name}></img> */}
-      <h3> Rostik Dev</h3>
+      <h3>Rostik Dev</h3>
       <span>Time now: {now.toLocaleTimeString()}</span>
     </HeadContainer>
   );

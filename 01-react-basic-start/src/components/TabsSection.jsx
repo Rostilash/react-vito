@@ -8,6 +8,9 @@ export default function TabsSection({ active, onChange }) {
       <Button isActive={active === "feedback"} onClick={() => onChange("feedback")}>
         Зворотній зв'язок
       </Button>
+      <Button isActive={active === "effect"} onClick={() => onChange("effect")}>
+        Зворотній зв'язок
+      </Button>
     </section>
   );
 }
