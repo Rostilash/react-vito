@@ -3,10 +3,12 @@ import { useState } from "react";
 
 export default function FeedbackSection() {
   const [name, setName] = useState("");
+  const [hasError, setHasError] = useState(false);
   const [reason, setReason] = useState("help");
 
   function handleNameChange(event) {
     setName(event.target.value);
+    setHasError(event.target.value.trim().length === 0);
   }
 
   return (
@@ -14,7 +16,15 @@ export default function FeedbackSection() {
       <h3> Зворотній зв'язок</h3>
       <form>
         <label htmlFor="name"> Ваше Імя </label>
-        <input type="text" className="control" value={name} onChange={handleNameChange}></input>
+        <input
+          type="text"
+          className="control"
+          value={name}
+          onChange={handleNameChange}
+          style={{
+            border: hasError ? "1px solid red" : null,
+          }}
+        ></input>
 
         <label htmlFor="name"> Причина звернення </label>
         <select id="reason" className="control" value={reason} onChange={(event) => setReason(event.target.value)}>
@@ -29,7 +39,9 @@ export default function FeedbackSection() {
           Reason: {reason}
         </pre>
 
-        <Button> Надіслати </Button>
+        <Button disabled={hasError} isActive={!hasError}>
+          Надіслати
+        </Button>
       </form>
     </section>
   );
