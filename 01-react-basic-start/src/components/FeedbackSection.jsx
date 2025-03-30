@@ -1,16 +1,10 @@
 import Button from "./Button/Button.jsx";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function FeedbackSection() {
-  const [form, setForm] = useState({ name: "", hasError: false, reason: "help" });
-
-  // const [name, setName] = useState("");
-  // const [hasError, setHasError] = useState(false);
-  // const [reason, setReason] = useState("help");
+  const [form, setForm] = useState({ name: "", hasError: false, reason: "Потрібна допомога" });
 
   function handleNameChange(event) {
-    // setName(event.target.value);
-    // setHasError(event.target.value.trim().length === 0);
     setForm((prev) => ({
       ...prev,
       name: event.target.value,
@@ -18,15 +12,27 @@ export default function FeedbackSection() {
     }));
   }
 
-  // function toggleError() {
-  // setHasError((prev) => !prev);
-  // }
+  function StateVsRef() {
+    const input = useRef(null);
+    const [show, setShow] = useState(false);
+
+    function handleKeyDown(event) {
+      if (event.key === "Enter") {
+        setShow(true);
+      }
+    }
+
+    return (
+      <div>
+        <h3>Some text: {show && input.current ? input.current.value : ""}</h3>
+        <input ref={input} type="text" onKeyDown={handleKeyDown} className="control" />
+      </div>
+    );
+  }
 
   return (
     <section>
       <h3> Зворотній зв'язок</h3>
-
-      {/* <Button onClick={toggleError}>Toggle Error</Button> */}
       <form>
         <label htmlFor="name"> Ваше Імя </label>
         <input
@@ -39,24 +45,26 @@ export default function FeedbackSection() {
           }}
         ></input>
 
-        <label htmlFor="name"> Причина звернення </label>
+        <label htmlFor="name"> Причина звернення - "{form.reason}"</label>
         <select
           id="reason"
           className="control"
           value={form.reason}
           onChange={(event) => setForm((prev) => ({ ...prev, reason: event.target.value }))}
         >
-          <option value="error">Помилка</option>
-          <option value="help">Потрібна допомога</option>
-          <option value="suggest">Пропозиція</option>
+          <option value="Помилка">Помилка</option>
+          <option value="Потрібна допомога">Потрібна допомога</option>
+          <option value="Пропозиція">Пропозиція</option>
         </select>
 
         {/* <pre>{JSON.stringify(form, null, 2)}</pre> */}
 
-        <Button disabled={form.hasError} isActive={!form.hasError}>
+        <Button disabled={form.hasError} isActive={!form.hasError} style={{ marginBottom: "1rem" }}>
           Надіслати
         </Button>
       </form>
+      <hr />
+      <StateVsRef />
     </section>
   );
 }
