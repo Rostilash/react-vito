@@ -20,6 +20,11 @@ export default function Header() {
     const interval = setInterval(() => {
       setNow(new Date());
     }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      console.log("cleaning...");
+    };
   }, []);
 
   return (

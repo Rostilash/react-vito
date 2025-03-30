@@ -13,7 +13,7 @@ export default function App() {
 
   setTimeout(() => {
     setVisible(false);
-  }, 3000);
+  }, 10000);
   return (
     <>
       {visible && <Header />}
