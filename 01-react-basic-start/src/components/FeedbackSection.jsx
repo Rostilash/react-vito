@@ -11,9 +11,16 @@ export default function FeedbackSection() {
     setHasError(event.target.value.trim().length === 0);
   }
 
+  function toggleError() {
+    setHasError((prev) => !prev);
+    setHasError((prev) => !prev);
+  }
+
   return (
     <section>
       <h3> Зворотній зв'язок</h3>
+
+      <Button onClick={toggleError}>Toggle Error</Button>
       <form>
         <label htmlFor="name"> Ваше Імя </label>
         <input
