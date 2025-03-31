@@ -9,9 +9,9 @@ export const PostItem = (props) => {
           {props.post.id}.{props.post.title}
         </strong>
         <div>{props.post.body}</div>
-        <div className="post--btns">
-          <button>Видалити</button>
-        </div>
+      </div>
+      <div className="post--btns">
+        <button>Видалити</button>
       </div>
     </div>
   );
