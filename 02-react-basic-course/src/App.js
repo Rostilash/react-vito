@@ -4,6 +4,8 @@ import ClassCounter from "./components/ClassCounter.jsx";
 import "./styles/app.css";
 import { PostItem } from "./components/PostItem";
 import { PostList } from "./components/PostList.jsx";
+import { MyButton } from "./components/UI/button/MyButton";
+import { MyInput } from "./components/UI/input/MyInput";
 
 export default function App() {
   const [posts, setPosts] = useState([
@@ -23,27 +25,22 @@ export default function App() {
       body: "description",
     },
   ]);
-  const [posts2, setPosts2] = useState([
-    {
-      id: 1,
-      title: "Python",
-      body: "description",
-    },
-    {
-      id: 2,
-      title: "Python 2",
-      body: "description",
-    },
-    {
-      id: 3,
-      title: "Python 3",
-      body: "description",
-    },
-  ]);
+
+  const [title, setTitle] = useState("");
+  const addNewPost = (e) => {
+    e.preventDefault();
+    console.log(title);
+  };
   return (
     <div className="App">
+      <form>
+        {/* керований компонент  */}
+        <MyInput value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Назва посту" />
+        <MyInput type="text" placeholder="Опис посту" />
+        <MyButton onClick={addNewPost}>Створити пост</MyButton>
+      </form>
+
       <PostList posts={posts} title="Список Постів JS" />
-      <PostList posts={posts2} title="Список Постів Python" />
     </div>
   );
 }
