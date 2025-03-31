@@ -1,8 +1,4 @@
 import React, { useState, useRef } from "react";
-import Counter from "./components/Counter.jsx";
-import ClassCounter from "./components/ClassCounter.jsx";
-import "./styles/app.css";
-import { PostItem } from "./components/PostItem";
 import { PostList } from "./components/PostList.jsx";
 import { MyButton } from "./components/UI/button/MyButton";
 import { MyInput } from "./components/UI/input/MyInput";
@@ -26,21 +22,21 @@ export default function App() {
     },
   ]);
 
-  const [title, setTitle] = useState("");
-  const bodyInputRef = useRef();
+  const [post, setPost] = useState({ title: "", body: "" });
 
   const addNewPost = (e) => {
     e.preventDefault();
-    console.log(title);
-    console.log(bodyInputRef.current.value);
+    setPosts([...posts, { ...post, id: Date.now() }]);
+    setPost({ title: "", body: "" });
   };
   return (
     <div className="App">
       <form>
         {/* керований компонент  */}
-        <MyInput value={title} onChange={(e) => setTitle(e.target.value)} type="text" placeholder="Назва посту" />
+        <MyInput value={post.title} onChange={(e) => setPost({ ...post, title: e.target.value })} type="text" placeholder="Назва посту" />
         {/* не керований компонент */}
-        <MyInput ref={bodyInputRef} type="text" placeholder="Опис посту" />
+        <MyInput value={post.body} onChange={(e) => setPost({ ...post, body: e.target.value })} type="text" placeholder="Опис посту" />
+
         <MyButton onClick={addNewPost}>Створити пост</MyButton>
       </form>
 
