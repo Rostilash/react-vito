@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import "./styles/app.css";
 import { PostList } from "./components/PostList.jsx";
 import { MyButton } from "./components/UI/button/MyButton";
@@ -25,6 +25,19 @@ export default function App() {
     },
   ]);
   const [selectedSort, setSelectedSort] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const sortedPosts = useMemo(() => {
+    // console.log("Working...");
+    if (selectedSort) {
+      return [...posts].sort((a, b) => a[selectedSort].localeCompare(b[selectedSort]));
+    }
+    return posts;
+  }, [selectedSort, posts]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery));
+  }, [searchQuery, sortedPosts]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -36,13 +49,14 @@ export default function App() {
   };
   const sortPosts = (sort) => {
     setSelectedSort(sort);
-    setPosts([...posts].sort((a, b) => a[sort].localeCompare(b[sort])));
   };
+
   return (
     <div className="App">
       <PostForm create={createPost} />
       <hr style={{ margin: "1rem" }} />
       <div>
+        <MyInput value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Пошук..." />
         <MySelect
           value={selectedSort}
           onChange={sortPosts}
@@ -54,8 +68,8 @@ export default function App() {
         />
       </div>
       {/* умовне відмальовування */}
-      {posts.length ? (
-        <PostList remove={removePost} posts={posts} title="Список Постів" />
+      {sortedAndSearchedPosts.length ? (
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список Постів" />
       ) : (
         <h2 style={{ textAlign: "center" }}>Пости не були знайдені!</h2>
       )}
