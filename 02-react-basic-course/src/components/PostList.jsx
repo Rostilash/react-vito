@@ -1,16 +1,30 @@
-import React from "react";
+import React, { useRef } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
+// import "./style-transition.css";
 import { PostItem } from "./PostItem";
 
 export const PostList = ({ posts, title, remove }) => {
+  const nodeRefs = useRef({});
   if (!posts.length) {
-    return <h2 style={{ textAlign: "center" }}>Пости не були знайдені!</h2>;
+    return <h1 style={{ textAlign: "center" }}>Посты не найдены</h1>;
   }
   return (
     <div>
       <h1 style={{ textAlign: "center" }}>{title}</h1>
-      {posts.map((post, index) => (
-        <PostItem remove={remove} number={index + 1} post={post} key={post.id}></PostItem>
-      ))}
+      <TransitionGroup>
+        {posts.map((post, index) => {
+          if (!nodeRefs.current[post.id]) {
+            nodeRefs.current[post.id] = React.createRef();
+          }
+          return (
+            <CSSTransition key={post.id} timeout={500} classNames="post" nodeRef={nodeRefs.current[post.id]}>
+              <div ref={nodeRefs.current[post.id]}>
+                <PostItem remove={remove} number={index + 1} post={post} />
+              </div>
+            </CSSTransition>
+          );
+        })}
+      </TransitionGroup>
     </div>
   );
 };
