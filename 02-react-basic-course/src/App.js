@@ -6,6 +6,7 @@ import { MyInput } from "./components/UI/input/MyInput";
 import { PostForm } from "./components/PostForm";
 import { MySelect } from "./components/UI/select/MySelect";
 import { PostFilter } from "./components/PostFilter";
+import { MyModal } from "./components/UI/MyModal/MyModal";
 
 export default function App() {
   const [posts, setPosts] = useState([
@@ -26,6 +27,7 @@ export default function App() {
     },
   ]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
+  const [modal, setModal] = useState(false);
 
   const sortedPosts = useMemo(() => {
     console.log("Working...");
@@ -41,6 +43,7 @@ export default function App() {
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
+    setModal(false);
   };
 
   // отримуємо пропс із дочірнього елемента
@@ -50,15 +53,21 @@ export default function App() {
 
   return (
     <div className="App">
-      <PostForm create={createPost} />
+      <MyButton
+        style={{ marginTop: "20px" }}
+        onClick={() => {
+          setModal(true);
+        }}
+      >
+        Створити користувача
+      </MyButton>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm create={createPost} />
+      </MyModal>
+
       <hr style={{ margin: "1rem" }} />
       <PostFilter filter={filter} setFilter={setFilter} />
-      {/* умовне відмальовування */}
-      {sortedAndSearchedPosts.length ? (
-        <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список Постів" />
-      ) : (
-        <h2 style={{ textAlign: "center" }}>Пости не були знайдені!</h2>
-      )}
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список Постів" />
     </div>
   );
 }
