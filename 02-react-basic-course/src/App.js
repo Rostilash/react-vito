@@ -11,21 +11,29 @@ import { usePosts } from "./hooks/usePosts.js";
 import PostService from "./components/API/PostService.jsx";
 import { Loader } from "./components/UI/Loader/Loader";
 import { useFetching } from "./hooks/useFetching.js";
+import { getPageCount, getPagesArray } from "./utils/pages";
+import { Pagination } from "./components/UI/pagination/Pagination.jsx";
 
 export default function App() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState({ sort: "", query: "" });
   const [modal, setModal] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [limit, setLimit] = useState(10);
+  const [page, setPage] = useState(1);
   const sortedAndSearchedPosts = usePosts(posts, filter.sort, filter.query);
 
-  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-    const posts = await PostService.getAll();
-    setPosts(posts);
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async (limit, page) => {
+    const response = await PostService.getAll(limit, page);
+    setPosts(response.data);
+    const totalCount = response.headers["x-total-count"];
+
+    setTotalPages(getPageCount(totalCount, limit));
   });
 
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+  useEffect(() =  {
+    fetchPosts(limit, page);
+  }, [page]);
 
   const createPost = (newPost) => {
     setPosts([...posts, newPost]);
@@ -37,9 +45,13 @@ export default function App() {
     setPosts(posts.filter((p) => p.id !== post.id));
   };
 
+  const changePage = (page) => {
+    setPage(page);
+    fetchPosts(limit, page);
+  };
+
   return (
     <div className="App">
-      <MyButton onClick={fetchPosts}>GET POSTS</MyButton>
       <MyButton
         style={{ marginTop: "20px" }}
         onClick={() => {
@@ -62,6 +74,7 @@ export default function App() {
       ) : (
         <PostList remove={removePost} posts={sortedAndSearchedPosts} title="Список Постів" />
       )}
+      <Pagination page={page} changePage={changePage} totalPages={totalPages} />
     </div>
   );
 }
