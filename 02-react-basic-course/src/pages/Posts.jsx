@@ -2,16 +2,14 @@ import React, { useState, useEffect } from "react";
 import "./../styles/app.css";
 import { PostList } from "./../components/PostList.jsx";
 import { MyButton } from "./../components/UI/button/MyButton";
-import { MyInput } from "./../components/UI/input/MyInput";
 import { PostForm } from "./../components/PostForm";
-import { MySelect } from "./../components/UI/select/MySelect";
 import { PostFilter } from "./../components/PostFilter";
 import { MyModal } from "./../components/UI/MyModal/MyModal";
 import { usePosts } from "./../hooks/usePosts.js";
-import PostService from "./../components/API/PostService.jsx";
+import PostService from "./../API/PostService.jsx";
 import { Loader } from "./../components/UI/Loader/Loader";
 import { useFetching } from "./../hooks/useFetching.js";
-import { getPageCount, getPagesArray } from "./../utils/pages";
+import { getPageCount } from "./../utils/pages";
 import { Pagination } from "./../components/UI/pagination/Pagination.jsx";
 
 export function Posts() {

@@ -1,17 +1,16 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
-import { About } from "./../pages/About";
-import { Posts } from "./../pages/Posts";
-import { Error } from "./../pages/Error";
-import { PostIdPage } from "../pages/PostIdPage";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { privateRoutes } from "./../router/index";
 
 export const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/about" element={<About />} />
-      <Route exact path="/posts" element={<Posts />} />
-      <Route exact path="/posts/:id" element={<PostIdPage />} />
-      <Route path="*" element={<Error />} />
+      <Route path="/" element={<Navigate to="/posts" replace />} />
+
+      {/* Генерація маршрутів з масиву */}
+      {privateRoutes.map((route, index) => (
+        <Route key={index} path={route.path} element={route.element} />
+      ))}
     </Routes>
   );
 };
