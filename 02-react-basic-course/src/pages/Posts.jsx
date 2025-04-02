@@ -58,7 +58,7 @@ export function Posts() {
           setModal(true);
         }}
       >
-        Створити користувача
+        Створити пост
       </MyButton>
       <MyModal visible={modal} setVisible={setModal}>
         <PostForm create={createPost} />
