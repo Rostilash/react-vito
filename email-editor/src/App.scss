@@ -1,15 +1,18 @@
 $primary: rebeccapurple;
 $colorErrors: red;
+
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  colort: white;
 }
 /* крутиться дів */
 .layout {
   padding: 20px;
   background-color: $primary;
+  color: white;
 }
 // @media (prefers-reduced-motion: no-preference) {
 //   .layout {

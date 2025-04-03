@@ -1,15 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 
-export const Details = ({ details, setDetails }) => {
+function InitialDetails ({ details, handleLoading }) {
   return (
-    <div>
+    <>
       <h1>{details.title}</h1>
-      <h2>{ details.desctipion}</h2>
-      <button onClick={() => setDetails(prev => {
-        return {
-          ...prev, title: prev.title + '.', desctipion: prev.desctipion + '/'
-        }
-      })}>{details.buttonText}</button>
-    </div>
+      <h2>{details.description}</h2>
+      <button onClick={handleLoading}>{details.buttonText}</button>
+    </>
   );
 };
+
+export const Details = memo(InitialDetails);
