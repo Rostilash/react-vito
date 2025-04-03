@@ -1,0 +1,27 @@
+$primary: rebeccapurple;
+$colorErrors: red;
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+/* крутиться дів */
+.layout {
+  padding: 20px;
+  background-color: $primary;
+}
+// @media (prefers-reduced-motion: no-preference) {
+//   .layout {
+//     animation: loy-spin infinite 20s linear;
+//   }
+// }
+// @keyframes loy-spin {
+//   from {
+//     transform: rotate(0deg);
+//   }
+//   to {
+//     transform: rotate(360deg);
+//   }
+// }
+/* кінець */
