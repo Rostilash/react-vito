@@ -1,3 +1,16 @@
 {
-  "emails": [{ "title": "a title" }]
+  "emails": [
+    {
+      "id": "c6d4",
+      "text": "Hello Max"
+    },
+    {
+      "id": "50ba",
+      "text": "Hello <b>World</b>"
+    },
+    {
+      "id": "730a",
+      "text": "Hello <u>Roma</u> How are <b>you</b> ?"
+    }
+  ]
 }

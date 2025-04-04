@@ -3,16 +3,27 @@ import { Bold, Eraser, Italic, Underline } from "lucide-react";
 import { useState, useRef } from "react";
 import { applyStyle, TStyle } from "./apply-style";
 import parse from "html-react-parser";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { emailService } from "../../services/email-sevice";
 
 export const EmailEditor = () => {
-  const [text, setText] = useState(
-    `At the Command Line With a simple but powerful shell script called todo.sh, you can interact with todo.txt at the command line for quick and easy, Unix-y access. The Todo.txt CLI supports archiving completed tasks to done.txt and priority/context tab autocompletion.`
-  );
+  const [text, setText] = useState("");
 
   const [selectionStart, setSelectionStart] = useState(0);
   const [selectionEnd, setSelectionEnd] = useState(0);
 
   const textRef = useRef<HTMLTextAreaElement | null>(null);
+
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending } = useMutation({
+    mutationKey: ["create email"],
+    mutationFn: () => emailService.sendEmail(text),
+    onSuccess: () => {
+      setText("");
+      queryClient.refetchQueries(["email list"]);
+    },
+  });
 
   const updateSelection = () => {
     if (!textRef.current) return;
@@ -30,12 +41,11 @@ export const EmailEditor = () => {
     setText(before + applyStyle(type, selectedText) + after);
   };
 
-  // console.log(parse(text));
-
   return (
     <div>
       <h1>Email Editor</h1>
-      <div className={styles.preview}>{parse(text)}</div>
+      {text && <div className={styles.preview}>{parse(text)}</div>}
+
       <div className={styles.cart}>
         <textarea
           ref={textRef}
@@ -49,7 +59,7 @@ export const EmailEditor = () => {
         </textarea>
         <div className={styles.actions}>
           <div className={styles.tools}>
-            <button onClick={() => setText("")}>
+            <button onClick={() => setText("Enter email...")}>
               <Eraser size={16} />
             </button>
             <button onClick={() => applyFormat("bold")}>
@@ -62,7 +72,9 @@ export const EmailEditor = () => {
               <Underline size={16} />
             </button>
           </div>
-          <button> Send now </button>
+          <button disabled={isPending} onClick={() => mutate()}>
+            Send now
+          </button>
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { Home } from "./Home";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Home } from "./pages/home/Home";
+import { createBrowserRouter, RouterProvider, Link } from "react-router-dom";
+import { Provider } from "./Provider";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("failed to find the root element");
@@ -27,6 +27,8 @@ const router = createBrowserRouter([
 
 createRoot(rootElement).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <Provider>
+      <RouterProvider router={router} />
+    </Provider>
   </StrictMode>
 );
