@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./EmailList.module.scss";
 import { useQuery } from "@tanstack/react-query";
-import { emailService } from "../../services/email-sevice";
+import { emailService } from "../../services/email-service";
 import parse from "html-react-parser";
 
 export const EmailList = () => {
