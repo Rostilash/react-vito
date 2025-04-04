@@ -1,8 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import { App } from "./App.js";
-import { AuthProvider } from "./AuthContext.js";
+import { Home } from "./Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,7 @@ if (!rootElement) throw new Error("failed to find the root element");
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
   },
   {
     path: "/about-us",
@@ -28,8 +27,6 @@ const router = createBrowserRouter([
 
 createRoot(rootElement).render(
   <StrictMode>
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <RouterProvider router={router} />
   </StrictMode>
 );
