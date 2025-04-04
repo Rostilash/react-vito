@@ -18,4 +18,5 @@ export const applyStyle = (type: TStyle, selectedText: string) => {
       formattedText = selectedText;
       break;
   }
+  return formattedText;
 };
